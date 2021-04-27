@@ -1,0 +1,7 @@
+.btn.btn-danger {
+    display: none;
+}
+
+.list-group-item:hover .btn-danger {
+    display: inline-block;
+}

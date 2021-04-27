@@ -1,0 +1,11 @@
+.card:hover {
+    cursor: pointer;
+}
+
+.card .additional-info {
+    display: none;
+}
+
+.card-body.active .additional-info {
+    display: block;
+}
