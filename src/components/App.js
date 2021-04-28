@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import Header from "./Header";
 import CityForm from "./CityForm";
 import CitiesList from './CitiesList';
 import useStateWithLocalStorage from './useStateWithLocalStorage';
 import CitiesCards from "./CitiesCards";
-import WeatherForecast from "./WeatherForecast";
+import DailyForecast from "./DailyForecast";
+import FewDaysForecast from "./FewDaysForecast";
 
 let App = () => {
     const [cities, setCities] = useStateWithLocalStorage('cities');
@@ -17,7 +17,8 @@ let App = () => {
                 key: Date.now(),
                 id: Date.now(),
                 name: cityName,
-                forecast: await getForecast(cityName)
+                forecast: await getForecast(cityName),
+                longTermForecast: await FewDaysForecast(cityName),
             }
         ])
     };
@@ -35,7 +36,22 @@ let App = () => {
         setCities(citiesList);
     }
 
-    let getForecast = async city => await WeatherForecast(city);
+    let getForecast = async city => await DailyForecast(city);
+
+    const setLongTermForecast = async cityName => {
+        let weatherData = await getLongTermForecast(cityName);
+
+        let citiesList = (cities.filter(city => {
+            if (city.name == cityName) {
+                return city.longTermForecast = weatherData;
+            } else {
+                return cities;
+            }
+        }));
+        setCities(citiesList);
+    }
+
+    let getLongTermForecast = async city => await FewDaysForecast(city);
 
     let handleDelete = id => {
         let filtered = cities.filter(city => {
@@ -53,7 +69,11 @@ let App = () => {
                     cities={cities}
                     handleDelete={handleDelete}
                 />
-                <CitiesCards cities={cities} setForecast={setForecast}/>
+                <CitiesCards
+                    cities={cities}
+                    setForecast={setForecast}
+                    setLongTermForecast={setLongTermForecast}
+                />
             </div>
         </div>
     );

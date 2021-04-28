@@ -6,6 +6,12 @@
     display: none;
 }
 
-.card-body.active .additional-info {
+.card.active .additional-info {
     display: block;
+}
+
+.card-img-top {
+    margin: auto;
+    width: 100px;
+    height: 100px;
 }

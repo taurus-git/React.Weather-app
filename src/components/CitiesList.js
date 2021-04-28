@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import CityListItem from './CityListItem';
 
 let CitiesList = ({cities, handleDelete}) => {
@@ -8,7 +7,12 @@ let CitiesList = ({cities, handleDelete}) => {
             <ul className="list-group list-group-flush">
                 {cities.map(city => {
                     return (
-                        <CityListItem key={city.key} id={city.id} handleDelete={handleDelete} name={city.name}/>
+                        <CityListItem
+                            key={city.key}
+                            id={city.id}
+                            handleDelete={handleDelete}
+                            name={city.name}
+                        />
                     )
                 })}
             </ul>
